@@ -1,0 +1,8 @@
+WimpE's alias list:
+   ali-seek seek 2 8 r 0-1600 m
+   se multi seek 2 8 r 0-1600; resume
+   2 t @ Please no more than 2 consecutive games-see news 550-thanks.
+   see multi seek 2 8 r 0-1600; resume
+   sslo ss Hi! I'm lonely!  Play me!
+
+
