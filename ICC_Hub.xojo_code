@@ -77,7 +77,7 @@ Protected Class ICC_Hub
 		  rem atext=c.convert(astr).ToText
 		  Var atext As Text
 		  If(inbuf.length < 1) Then
-		    Print "readall returned no characters"
+		    debug_print_string("readall returned no characters")
 		    Return
 		  end if
 		  rem atext=inbuf.defineEncoding(Encodings.ASCII).ToText
