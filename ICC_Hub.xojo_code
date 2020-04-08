@@ -8,6 +8,13 @@ Protected Class ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub Constructor()
+		  dg_map=New ICC_DG_debug
+		  xcn_map=New ICC_XCN_debug
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub debug_print(atxt as text)
 		  rem implemented in a subclass that can tell where to send the debug output
 		  #pragma Unused atxt
