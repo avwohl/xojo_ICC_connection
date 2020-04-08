@@ -362,7 +362,7 @@ Protected Class ICC_Hub
 		  If System.Ticks<keep_alive_timeout Then
 		    Return
 		  End If
-		  app.fatal_error("keep alive failure")
+		  Raise New ICC_Net_error_keep_alive("keep alive failure")
 		End Sub
 	#tag EndMethod
 
