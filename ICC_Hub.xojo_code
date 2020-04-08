@@ -11,6 +11,10 @@ Protected Class ICC_Hub
 		Sub Constructor()
 		  dg_map=New ICC_DG_debug
 		  xcn_map=New ICC_XCN_debug
+		  rem allow connect to have the full keepalive time to work
+		  got_keep_alive
+		  rem send a keepalive request as soon as possible
+		  update_next_keep_alive_ticks_time=0
 		End Sub
 	#tag EndMethod
 
