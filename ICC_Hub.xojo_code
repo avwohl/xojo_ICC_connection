@@ -2,8 +2,7 @@
 Protected Class ICC_Hub
 	#tag Method, Flags = &h0
 		Sub ask_keepalive(user_name as string)
-		  // must implement in subclass
-		  Raise New RuntimeException("NYI ask_keepalive for user:"+user_name)
+		  send_line("/tell "+user_name+" keep_alive")
 		End Sub
 	#tag EndMethod
 
@@ -15,6 +14,8 @@ Protected Class ICC_Hub
 		  got_keep_alive
 		  rem send a keepalive request as soon as possible
 		  update_next_keep_alive_ticks_time=0
+		  make_ICC_Net
+		  
 		End Sub
 	#tag EndMethod
 
@@ -53,6 +54,14 @@ Protected Class ICC_Hub
 		  #pragma unused jam_text
 		  return true
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub make_ICC_Net()
+		  rem if using a subclass of ICC_Net have your hub override this method to create it
+		  icc_net=New ICC_net(Self)
+		  
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -340,6 +349,15 @@ Protected Class ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub send_line(astr as string)
+		  iccnet.Write(astr+Chr(10))
+		  If app.settings.get_integer("debug_data_to_icc")>0 Then
+		    app.outs("icc>"+astr)
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub setup_L2(some_L2 as integer)
 		  while (login_L2_settings.Length()<=some_L2)
 		    login_L2_settings=login_L2_settings+"0"
@@ -396,6 +414,10 @@ Protected Class ICC_Hub
 
 	#tag Property, Flags = &h0
 		iccparse As ICC_Parse_12
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		icc_net As ICC_Net
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
