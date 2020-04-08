@@ -14,7 +14,6 @@ Protected Class ICC_Hub
 		  got_keep_alive
 		  rem send a keepalive request as soon as possible
 		  update_next_keep_alive_ticks_time=0
-		  make_ICC_Net
 		  
 		End Sub
 	#tag EndMethod
@@ -59,7 +58,7 @@ Protected Class ICC_Hub
 	#tag Method, Flags = &h0
 		Sub make_ICC_Net()
 		  rem if using a subclass of ICC_Net have your hub override this method to create it
-		  icc_net=New ICC_net(Self)
+		  iccnet=New ICC_net(Self)
 		  
 		End Sub
 	#tag EndMethod
@@ -352,7 +351,7 @@ Protected Class ICC_Hub
 		Sub send_line(astr as string)
 		  iccnet.Write(astr+Chr(10))
 		  If app.settings.get_integer("debug_data_to_icc")>0 Then
-		    app.outs("icc>"+astr)
+		    debug_print_string("icc>"+astr)
 		  End If
 		End Sub
 	#tag EndMethod
@@ -381,8 +380,9 @@ Protected Class ICC_Hub
 		Sub startup()
 		  login_L2_settings="0"
 		  shutdown()
-		  iccparse=new ICC_Parse_12(SELF)
-		  iccnet=new ICC_net(SELF)
+		  iccparse=New ICC_Parse_12(Self)
+		  make_ICC_Net
+		  
 		End Sub
 	#tag EndMethod
 
@@ -414,10 +414,6 @@ Protected Class ICC_Hub
 
 	#tag Property, Flags = &h0
 		iccparse As ICC_Parse_12
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		icc_net As ICC_Net
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
