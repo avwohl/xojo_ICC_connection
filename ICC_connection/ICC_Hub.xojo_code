@@ -8,7 +8,7 @@ Protected Class ICC_Hub
 
 	#tag Method, Flags = &h0
 		Sub Constructor()
-		  dg_map=New ICC_DG_debug
+		  dg_map=New ICC_connection.ICC_DG_debug
 		  xcn_map=New ICC_XCN_debug
 		  rem allow connect to have the full keepalive time to work
 		  got_keep_alive
@@ -142,7 +142,7 @@ Protected Class ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub print_dg(description as string, dg_name as text, a_dg as ICC_Datagram)
+		Sub print_dg(description as string, dg_name as text, a_dg as ICC_connection.ICC_Datagram)
 		  var result as text
 		  result=AVW_util.to_text(description)+AVW_util.to_text(" ")+dg_name
 		  if a_dg.ntokens> 0 then
@@ -155,24 +155,24 @@ Protected Class ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub recieve_L1(a_dg As ICC_Datagram)
+		Sub recieve_L1(a_dg As ICC_connection.ICC_Datagram)
 		  rem this function is to be filled in a subclass so args not used here
 		  #pragma unused a_dg
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2(a_dg as ICC_Datagram) As boolean
+		Function recieve_L2(a_dg as ICC_connection.ICC_Datagram) As boolean
 		  Var dgram_num As Integer = a_dg.nums(0)
 		  print_dg("L2",dg_map.get_datagram_name(dgram_num),a_dg)
-		  If dgram_num = ICC_DG.DG_WHO_AM_I Then
+		  If dgram_num = ICC_connection.ICC_DG.DG_WHO_AM_I Then
 		    Return recieve_L2_who_am_i(a_dg.tokens(1),a_dg.tokens(2)) 
 		  End If
-		  If dgram_num = ICC_DG.DG_PERSONAL_TELL Then
+		  If dgram_num = ICC_connection.ICC_DG.DG_PERSONAL_TELL Then
 		    Return recieve_L2_personal_tell(a_dg.tokens(1),a_dg.tokens(2),a_dg.tokens(3),a_dg.nums(4))
 		  End If
-		  If dgram_num = ICC_DG.DG_MY_GAME_STARTED Then
-		    Var myg As ICC_DG_data_my_game_started = New ICC_DG_data_my_game_started
+		  If dgram_num = ICC_connection.ICC_DG.DG_MY_GAME_STARTED Then
+		    Var myg As ICC_connection.ICC_DG_data_my_game_started = New ICC_connection.ICC_DG_data_my_game_started
 		    myg.game_num=a_dg.nums(1)
 		    myg.white_username=a_dg.tokens(2)
 		    myg.black_username=a_dg.tokens(3)
@@ -198,8 +198,8 @@ Protected Class ICC_Hub
 		    myg.promote_to_king_ok=a_dg.nums(23)
 		    Return recieve_L2_my_game_started(myg)
 		  End If
-		  If dgram_num = ICC_DG.DG_MY_GAME_RESULT Then
-		    Var myr As ICC_DG_data_my_game_result=New ICC_DG_data_my_game_result
+		  If dgram_num = ICC_connection.ICC_DG.DG_MY_GAME_RESULT Then
+		    Var myr As ICC_connection.ICC_DG_data_my_game_result=New ICC_connection.ICC_DG_data_my_game_result
 		    myr.game_num=a_dg.nums(1)
 		    myr.examined=a_dg.nums(2)
 		    myr.result=a_dg.tokens(3)
@@ -208,14 +208,14 @@ Protected Class ICC_Hub
 		    myr.eco=a_dg.tokens(6)
 		    Return recieve_L2_my_game_result(myr)
 		  End If
-		  If dgram_num = ICC_DG.DG_MY_RELATION_TO_GAME Then
-		    Var myre As ICC_DG_data_game_relation
+		  If dgram_num = ICC_connection.ICC_DG.DG_MY_RELATION_TO_GAME Then
+		    Var myre As ICC_connection.ICC_DG_data_game_relation
 		    myre.game_num=a_dg.nums(1)
 		    myre.relation=a_dg.tokens(2)
 		    Return recieve_L2_my_relation_to_game(myre)
 		  End If
-		  If dgram_num = ICC_DG. DG_JBOARD Then
-		    Var myj As ICC_DG_data_jboard = New ICC_DG_data_jboard
+		  If dgram_num = ICC_connection.ICC_DG. DG_JBOARD Then
+		    Var myj As ICC_connection.ICC_DG_data_jboard = New ICC_connection.ICC_DG_data_jboard
 		    myj.game_num=a_dg.nums(1)
 		    myj.board=a_dg.tokens(2)
 		    myj.color_on_move=a_dg.tokens(3)
@@ -229,8 +229,8 @@ Protected Class ICC_Hub
 		    myj.flip=a_dg.nums(11)
 		    Return recieve_L2_jboard(myj)
 		  End If
-		  If dgram_num = ICC_DG.DG_MATCH Then
-		    Var adat As ICC_DG_data_match = New ICC_DG_data_match
+		  If dgram_num = ICC_connection.ICC_DG.DG_MATCH Then
+		    Var adat As ICC_connection.ICC_DG_data_match = New ICC_connection.ICC_DG_data_match
 		    adat.challenger_username=a_dg.tokens(1)
 		    adat.challenger_rating=a_dg.nums(2)
 		    adat.challenger_rating_annotation=a_dg.nums(3)
@@ -252,15 +252,15 @@ Protected Class ICC_Hub
 		    adat.match_delta_rating3=a_dg.nums(19)
 		    Return recieve_L2_match(adat)
 		  End If
-		  If dgram_num = ICC_DG.DG_MSEC Then
+		  If dgram_num = ICC_connection.ICC_DG.DG_MSEC Then
 		    // todo
 		    Return False
 		  End If
-		  If dgram_num = ICC_DG.DG_ILLEGAL_MOVE Then
+		  If dgram_num = ICC_connection.ICC_DG.DG_ILLEGAL_MOVE Then
 		    rem todao
 		    Return False
 		  End If
-		  If dgram_num = ICC_DG.DG_OFFERS_IN_MY_GAME Then
+		  If dgram_num = ICC_connection.ICC_DG.DG_OFFERS_IN_MY_GAME Then
 		    // todo
 		    Return false
 		  End If
@@ -269,7 +269,7 @@ Protected Class ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_jboard(myj as ICC_DG_data_jboard) As Boolean
+		Function recieve_L2_jboard(myj as ICC_connection.ICC_DG_data_jboard) As Boolean
 		  rem abstract method
 		  #Pragma unused myj
 		  Return False
@@ -277,7 +277,7 @@ Protected Class ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_match(adat as ICC_DG_data_match) As Boolean
+		Function recieve_L2_match(adat as ICC_connection.ICC_DG_data_match) As Boolean
 		  rem abstract method
 		  #Pragma unused adat
 		  Return false
@@ -285,7 +285,7 @@ Protected Class ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_my_game_result(myr as ICC_DG_data_my_game_result) As boolean
+		Function recieve_L2_my_game_result(myr as ICC_connection.ICC_DG_data_my_game_result) As boolean
 		  rem abstract method
 		  #pragma unused myr
 		  Return False
@@ -293,7 +293,7 @@ Protected Class ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_my_game_started(myg AS ICC_DG_data_my_game_started) As boolean
+		Function recieve_L2_my_game_started(myg AS ICC_connection.ICC_DG_data_my_game_started) As boolean
 		  rem abstract method
 		  #Pragma unused myg
 		  Return False
@@ -302,7 +302,7 @@ Protected Class ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_my_relation_to_game(myr as ICC_DG_data_game_relation) As boolean
+		Function recieve_L2_my_relation_to_game(myr as ICC_connection.ICC_DG_data_game_relation) As boolean
 		  // abstract method
 		  #Pragma unused myr
 		  Return True
@@ -405,7 +405,7 @@ Protected Class ICC_Hub
 
 
 	#tag Property, Flags = &h1
-		Protected dg_map As ICC_DG_debug
+		Protected dg_map As ICC_connection.ICC_DG_debug
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

@@ -47,7 +47,7 @@ Protected Class ICC_Parse_12
 		      #EndIf
 		    End If
 		    Select Case cur_dg.state
-		    Case ICC_Datagram.parse_states.ST_text
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_text
 		      If (ch = CONTROL_Y) Then
 		        finish_st_text
 		        cur_dg.state=ICC_Datagram.parse_states.ST_text_ctly
@@ -56,7 +56,7 @@ Protected Class ICC_Parse_12
 		      Else
 		        stuff_char(ch)
 		      End If
-		    Case ICC_Datagram.parse_states.ST_text_ctly
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_text_ctly
 		      If(ch=RIGHT_SQUARE) Then
 		        stuff_char(0)
 		        If(cur_dg.ntokens > 0) Then
@@ -70,7 +70,7 @@ Protected Class ICC_Parse_12
 		      Elseif (ch = LEFT_PAREN) Then
 		        parser_recurse(ICC_Datagram.parse_states.ST_text,ICC_Datagram.parse_states.ST_open_l2)
 		      End If
-		    Case ICC_Datagram.parse_states.ST_open_L1
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_open_L1
 		      If (ch = CONTROL_Y) Then
 		        Return jam(ch,"unexpected control-y inside L1")
 		      End If
@@ -82,7 +82,7 @@ Protected Class ICC_Parse_12
 		        Var ach As String = Chr(ch)
 		        cur_dg.tokens(cur_dg.ntokens-1)=cur_dg.tokens(cur_dg.ntokens-1)+ach.ToText
 		      End If
-		    Case ICC_Datagram.parse_states.ST_open_L1_name
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_open_L1_name
 		      If(ch=Control_Y) Then
 		        Return jam(ch,"control y inside open L1 name")
 		      End If
@@ -93,13 +93,13 @@ Protected Class ICC_Parse_12
 		      Else
 		        stuff_char(ch)
 		      End If
-		    Case ICC_Datagram.parse_states.ST_in_L1 
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_in_L1 
 		      If(ch=Control_Y) Then
 		        cur_dg.state=ICC_Datagram.parse_states.ST_in_l1_ctly
 		      Else
 		        stuff_char(ch)
 		      End If
-		    Case ICC_Datagram.parse_states.ST_in_L1_ctly
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_in_L1_ctly
 		      If (ch=Left_SQUARE) Then
 		        parser_recurse(ICC_Datagram.parse_states.ST_text,ICC_Datagram.parse_states.ST_open_l1)
 		      Elseif (ch=RIGHT_SQUARE) Then
@@ -113,9 +113,9 @@ Protected Class ICC_Parse_12
 		      Else
 		        Return jam(ch,"in L1")
 		      End If
-		    Case ICC_Datagram.parse_states.ST_nest_l1
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_nest_l1
 		      Return jam(ch,"in nest L1 1")
-		    Case ICC_Datagram.parse_states.ST_open_l2
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_open_l2
 		      If(ch=Control_Y) Then
 		        Return jam(ch,"in nest L1 2")
 		      End if	
@@ -127,7 +127,7 @@ Protected Class ICC_Parse_12
 		      If(ch = CHAR_SPACE) Then
 		        cur_dg.state=ICC_Datagram.parse_states.ST_in_L2
 		      End If
-		    Case ICC_Datagram.parse_states.ST_in_l2
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_in_l2
 		      If(ch=Control_Y) Then
 		        cur_dg.state=ICC_Datagram.parse_states.ST_l2_ctly
 		      Elseif (ch=LEFT_SQUIG) Then
@@ -140,7 +140,7 @@ Protected Class ICC_Parse_12
 		      Else
 		        stuff_char(ch)
 		      End If
-		    Case ICC_Datagram.parse_states.ST_in_l2_in_sqiggly_quoted
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_in_l2_in_sqiggly_quoted
 		      If(ch=Control_Y) Then
 		        cur_dg.state=ICC_Datagram.parse_states.ST_l2_ctly
 		      Elseif (ch=LEFT_SQUIG) Then
@@ -152,7 +152,7 @@ Protected Class ICC_Parse_12
 		      Else
 		        stuff_char(ch)
 		      End If
-		    Case ICC_Datagram.parse_states.ST_l2_ctly
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_l2_ctly
 		      If (ch=LEFT_SQUIG) Then
 		        cur_dg.state=ICC_Datagram.parse_states.ST_l2_quoted
 		      Elseif (ch=RIGHT_PAREN) Then
@@ -165,13 +165,13 @@ Protected Class ICC_Parse_12
 		      Else
 		        Return jam(ch,"control-Y unexpect char")
 		      End If
-		    Case ICC_Datagram.parse_states.ST_l2_quoted
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_l2_quoted
 		      If (ch=Control_Y) Then
 		        cur_dg.state=ICC_Datagram.parse_states.ST_l2_quoted_ctly
 		      Else
 		        stuff_char(ch)
 		      End If
-		    Case ICC_Datagram.parse_states.ST_l2_quoted_ctly
+		    Case ICC_connection.ICC_Datagram.parse_states.ST_l2_quoted_ctly
 		      If (ch <> RIGHT_SQUIG) Then
 		        Return jam(ch,"right squig in L2 quoted controly")
 		      End If
@@ -181,7 +181,7 @@ Protected Class ICC_Parse_12
 		    End
 		  Next
 		  rem flush output during login so the partial line login: show sup
-		  If cur_dg.state = ICC_Datagram.parse_states.ST_text Then
+		  If cur_dg.state = ICC_connection.ICC_Datagram.parse_states.ST_text Then
 		    stuff_char(0)
 		  End If
 		  Return False
@@ -204,7 +204,7 @@ Protected Class ICC_Parse_12
 
 	#tag Method, Flags = &h0
 		Sub init()
-		  cur_dg=New ICC_Datagram
+		  cur_dg=New ICC_connection.ICC_Datagram
 		  
 		End Sub
 	#tag EndMethod
@@ -218,10 +218,10 @@ Protected Class ICC_Parse_12
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub parser_recurse(backtrack_to as ICC_Datagram.parse_states, new_state as ICC_Datagram.parse_states)
+		Sub parser_recurse(backtrack_to as ICC_connection.ICC_Datagram.parse_states, new_state as ICC_connection.ICC_Datagram.parse_states)
 		  cur_dg.state=backtrack_to
 		  saved_parse.AddRow(cur_dg)
-		  cur_dg=New ICC_Datagram
+		  cur_dg=New ICC_connection.ICC_Datagram
 		  alloc_token
 		  cur_dg.nums(cur_dg.ntokens-1)=0
 		  cur_dg.tokens(cur_dg.ntokens-1)=""
@@ -243,14 +243,14 @@ Protected Class ICC_Parse_12
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub recieve_L1(a_dg As ICC_Datagram)
+		Sub recieve_L1(a_dg As ICC_connection.ICC_Datagram)
 		  icchub.recieve_L1(a_dg)
 		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2(a_dg as ICC_Datagram) As boolean
+		Function recieve_L2(a_dg as ICC_connection.ICC_Datagram) As boolean
 		  rem don't add code here for your datagrams
 		  rem in the example look for XojoTestBotHub function recieve_L2
 		  Return icchub.recieve_L2(a_dg)
@@ -282,7 +282,7 @@ Protected Class ICC_Parse_12
 
 
 	#tag Property, Flags = &h0
-		cur_dg As ICC_Datagram
+		cur_dg As ICC_connection.ICC_Datagram
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -290,7 +290,7 @@ Protected Class ICC_Parse_12
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		saved_parse() As ICC_Datagram
+		saved_parse() As ICC_connection.ICC_Datagram
 	#tag EndProperty
 
 

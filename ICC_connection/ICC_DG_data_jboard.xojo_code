@@ -8,7 +8,7 @@ Protected Class ICC_DG_data_jboard
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub other_player_is_up(myg as ICC_DG_data_game_unified)
+		Sub other_player_is_up(myg as ICC_connection.ICC_DG_data_game_unified)
 		  Var my_color As Text=myg.get_game_relation.get_my_color
 		  If my_color <> get_color_on_move Then
 		    Return
