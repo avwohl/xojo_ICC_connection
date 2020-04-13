@@ -66,6 +66,54 @@ Protected Class ICC_DG_data_my_game_result
 			Type="Integer"
 			EditorType=""
 		#tag EndViewProperty
+		#tag ViewProperty
+			Name="description"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="text"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="eco"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="text"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="examined"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="game_num"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="result"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="text"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="score"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="text"
+			EditorType=""
+		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
 #tag EndClass
