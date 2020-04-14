@@ -1,5 +1,9 @@
 #tag Module
 Protected Module ICC_connection
+	#tag Constant, Name = SEND_TO_SERVER_EOL, Type = Double, Dynamic = False, Default = \"10", Scope = Public
+	#tag EndConstant
+
+
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="Name"

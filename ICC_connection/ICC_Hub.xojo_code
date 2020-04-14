@@ -265,6 +265,7 @@ Protected Class ICC_Hub
 		    Return false
 		  End If
 		  print_dg("UNHANDLED L2",dg_map.get_datagram_name(dgram_num),a_dg)
+		  Return False
 		End Function
 	#tag EndMethod
 
