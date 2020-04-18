@@ -3,13 +3,13 @@
 ### Author Aaron Wohl https://github.com/avwohl
 
 ### Where to find the latest stable version of this file:
-[https://github.com/avwohl/xojo_ICC_connection/blob/stable/README.md](https://github.com/avwohl/xojo_ICC_connection/blob/stable/README.md)
+[https://github.com/avwohl/xojo_ICC_connection/blob/master/README.md](https://github.com/avwohl/xojo_ICC_connection/blob/master/README.md)
 
 ### Documentation using git and submodules and these libs in xojo:
-[https://github.com/avwohl/xojo_documentation/tree/stable](https://github.com/avwohl/xojo_documentation/tree/stable)
+[https://github.com/avwohl/xojo_documentation](https://github.com/avwohl/xojo_documentation)
 
 ### Download the stable version of this git submodule for settings for xojo:
-[https://github.com/avwohl/xojo_ICC_connection/tree/stable](https://github.com/avwohl/xojo_ICC_connection/tree/stable)
+[https://github.com/avwohl/xojo_ICC_connection](https://github.com/avwohl/xojo_ICC_connection)
 
 xojo_ICC_connection is a library to connect to Internet Chess Club.  It takes care of the tcp connection and parsing the data from ICC.
 
