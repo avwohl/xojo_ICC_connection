@@ -209,7 +209,7 @@ Protected Class ICC_Hub
 		    Return recieve_L2_my_game_result(myr)
 		  End If
 		  If dgram_num = ICC_connection.ICC_DG.DG_MY_RELATION_TO_GAME Then
-		    Var myre As ICC_connection.ICC_DG_data_game_relation
+		    Var myre As ICC_connection.ICC_DG_data_game_relation=New ICC_connection.ICC_DG_data_game_relation
 		    myre.game_num=a_dg.nums(1)
 		    myre.relation=a_dg.tokens(2)
 		    Return recieve_L2_my_relation_to_game(myre)
